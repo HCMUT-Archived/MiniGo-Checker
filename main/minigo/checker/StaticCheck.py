@@ -742,111 +742,110 @@ class StaticChecker(BaseVisitor, Utils):
 
         l = lsym.mtype
         r = rsym.mtype
-        match ast.op:
-            case '+':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, l, lsym.value + rsym.value)
-                if isinstance(l, IntType) and isinstance(r, FloatType):
-                    return Symbol(None, FloatType(), lsym.value + rsym.value)
-                if isinstance(l, FloatType) and isinstance(r, IntType):
-                    return Symbol(None, FloatType(), lsym.value + rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '-':
-                # return
-                for t in [IntType, FloatType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, l, lsym.value - rsym.value)
-                if isinstance(l, IntType) and isinstance(r, FloatType):
-                    return Symbol(None, FloatType(), lsym.value - rsym.value)
-                if isinstance(l, FloatType) and isinstance(r, IntType):
-                    return Symbol(None, FloatType(), lsym.value - rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '*':
-                # return
-                for t in [IntType, FloatType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, l, lsym.value * rsym.value)
-                if isinstance(l, IntType) and isinstance(r, FloatType):
-                    return Symbol(None, FloatType(), lsym.value * rsym.value)
-                if isinstance(l, FloatType) and isinstance(r, IntType):
-                    return Symbol(None, FloatType(), lsym.value * rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '/':
-                # return
-                for t in [IntType, FloatType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, l, lsym.value / rsym.value)
-                if isinstance(l, IntType) and isinstance(r, FloatType):
-                    return Symbol(None, FloatType(), lsym.value / rsym.value)
-                if isinstance(l, FloatType) and isinstance(r, IntType):
-                    return Symbol(None, FloatType(), lsym.value / rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '%':
-                # return
-                if isinstance(l, IntType) and isinstance(r, IntType):
-                    return Symbol(None, IntType(), lsym.value % rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '==':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value == rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '!=':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value != rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '<':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value < rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '<=':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value <= rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '>':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value > rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '>=':
-                # return
-                for t in [IntType, FloatType, StringType]:
-                    if isinstance(l, t) and isinstance(r, t):
-                        return Symbol(None, BoolType(), lsym.value >= rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '&&':
-                # return
-                if isinstance(l, BoolType) and isinstance(r, BoolType):
-                    return Symbol(None, BoolType(), lsym.value and rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
-            case '||':
-                # return
-                if isinstance(l, BoolType) and isinstance(r, BoolType):
-                    return Symbol(None, BoolType(), lsym.value or rsym.value)
-                # throw
-                raise SErr.TypeMismatch(ast)
+        if ast.op == '+':
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, l, lsym.value + rsym.value)
+            if isinstance(l, IntType) and isinstance(r, FloatType):
+                return Symbol(None, FloatType(), lsym.value + rsym.value)
+            if isinstance(l, FloatType) and isinstance(r, IntType):
+                return Symbol(None, FloatType(), lsym.value + rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '-':
+            # return
+            for t in [IntType, FloatType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, l, lsym.value - rsym.value)
+            if isinstance(l, IntType) and isinstance(r, FloatType):
+                return Symbol(None, FloatType(), lsym.value - rsym.value)
+            if isinstance(l, FloatType) and isinstance(r, IntType):
+                return Symbol(None, FloatType(), lsym.value - rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '*':
+            # return
+            for t in [IntType, FloatType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, l, lsym.value * rsym.value)
+            if isinstance(l, IntType) and isinstance(r, FloatType):
+                return Symbol(None, FloatType(), lsym.value * rsym.value)
+            if isinstance(l, FloatType) and isinstance(r, IntType):
+                return Symbol(None, FloatType(), lsym.value * rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '/':
+            # return
+            for t in [IntType, FloatType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, l, lsym.value / rsym.value)
+            if isinstance(l, IntType) and isinstance(r, FloatType):
+                return Symbol(None, FloatType(), lsym.value / rsym.value)
+            if isinstance(l, FloatType) and isinstance(r, IntType):
+                return Symbol(None, FloatType(), lsym.value / rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '%':
+            # return
+            if isinstance(l, IntType) and isinstance(r, IntType):
+                return Symbol(None, IntType(), lsym.value % rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '==':
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value == rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '!=':
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value != rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if ast.op == '<':
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value < rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if (ast.op == '<='):
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value <= rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if (ast.op == '>'):
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value > rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if (ast.op == '>='):
+            # return
+            for t in [IntType, FloatType, StringType]:
+                if isinstance(l, t) and isinstance(r, t):
+                    return Symbol(None, BoolType(), lsym.value >= rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if (ast.op == '&&'):
+            # return
+            if isinstance(l, BoolType) and isinstance(r, BoolType):
+                return Symbol(None, BoolType(), lsym.value and rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
+        if (ast.op == '||'):
+            # return
+            if isinstance(l, BoolType) and isinstance(r, BoolType):
+                return Symbol(None, BoolType(), lsym.value or rsym.value)
+            # throw
+            raise SErr.TypeMismatch(ast)
         # exp check flag
 
         return l
@@ -867,15 +866,18 @@ class StaticChecker(BaseVisitor, Utils):
                 b.value = ""
             elif isinstance(b.mtype, BoolType):
                 b.value = False
-        match ast.op:
-            case '-':
-                if isinstance(b, (IntType, FloatType)):
-                    return Symbol(None, b.mtype, -b.value)
+        if ast.op == '-':
+            if isinstance(b, (IntType, FloatType)):
+                return Symbol(None, b.mtype, -b.value)
+            else:
                 raise SErr.TypeMismatch(ast)
-            case '!':
-                if isinstance(b, BoolType):
-                    return Symbol(None, BoolType(), not b.value)
+
+        elif ast.op == '!':
+            if isinstance(b, BoolType):
+                return Symbol(None, BoolType(), not b.value)
+            else:
                 raise SErr.TypeMismatch(ast)
+
         # exp check flag
 
         return b
